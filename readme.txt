@@ -26,7 +26,7 @@ Allows you to easily handle redirects to an unlimited number of offsite and onsi
 
 <ol>
 <li>Upload the <b>redirectit</b> directory to your <b>plugins</b>.</li>
-<li>In Wordpress management panel active "<b>Cleverwise Redirect It</b>" plugin.</li>
+<li>In Wordpress management panel activate "<b>Cleverwise Redirect It</b>" plugin.</li>
 <li>A new menu option <b>Redirect It</b> will appear below your on your menu (near Comments)</li>
 <li>Once you have loaded the main panel for the plugin click on the "<b>Help Guide</b>" link which explains in detail how to use the plugin</li>
 </ol>

@@ -25,10 +25,10 @@ Allows you to easily handle redirects to an unlimited number of offsite and onsi
 == Installation ==
 
 <ol>
-<li>Upload the <b>redirectit</b> directory to your <b>plugins</b>.</li>
-<li>In Wordpress management panel activate "<b>Cleverwise Redirect It</b>" plugin.</li>
-<li>A new menu option <b>Redirect It</b> will appear below your on your menu (near Comments)</li>
-<li>Once you have loaded the main panel for the plugin click on the "<b>Help Guide</b>" link which explains in detail how to use the plugin</li>
+<li>Upload the <span style="font-weight: bold;">redirectit</span> directory to your <span style="font-weight: bold;">plugins</span> .</li>
+<li>In Wordpress management panel activate "<span style="font-weight: bold;">Cleverwise Redirect It</span> " plugin.</li>
+<li>A new menu option "<span style="font-weight: bold;">Redirect It</span> " will appear on your main menu (under Comments)</li>
+<li>Once you have loaded the main panel for the plugin click on the "<span style="font-weight: bold;">Help Guide</span> " link which explains in detail how to use the plugin</li>
 </ol>
 
 == Frequently Asked Questions ==
@@ -47,7 +47,7 @@ Well yes and no.  All data is stored in the database but redirection doesn't occ
 
 = Won't the redirect file be huge? =
 
-It is doubtful.  It is hard to say for sure the exact length due to various link sizes.  However lets assume for a moment a link size of 150 characters (which is pretty long - see next question), and a link title of 25 characters.  One million redirects would be around 167MB.  At this point you would need a dedicated server or VPS with a lot of memory like gigs, so 167MB is nothing.  For more realistic numbers 5,000 links is around 855KB, which for caching is small, and 100 links is around 17KB.  To give you a comparison Wordpress version 3.8.1 is around 17MB or 17,000KB.
+Very doubtful.  It is hard to say for sure the exact length due to various link sizes.  However lets assume for a moment a link size of 150 characters (which is pretty long - see next question), and a link title of 25 characters.  One million redirects would be around 167MB.  At this point you would need a dedicated server or VPS with a lot of memory like gigs, so 167MB is nothing.  For more realistic numbers 5,000 links is around 855KB, which for caching is small, and 100 links is around 17KB.  To give you a comparison Wordpress version 3.8.1 is around 17MB or 17,000KB.
 
 = What does a 150 character link look like? =
 

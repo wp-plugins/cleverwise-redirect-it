@@ -20,15 +20,15 @@ Allows you to easily handle redirects to an unlimited number of offsite and onsi
 
 <p>Language Support: Should work for all languages that use the A-Z alphabet.  Plugin only displays text (link names) entered by you.  The only limitation is possible removal of unknown characters outside standard A-Z.</p>
 
-<p>I will add some screenshots and more information shortly.  Unfortunately I just got hit with some server upgrades.  However fire away with any questions.</p>
+<p>I will add some screenshots and more information shortly.  Unfortunately I just got hit with some server upgrades. However feel free to ask questions and make commets about the plugin.  Finally while I am a seasoned PHP programmer and server admin I am still learning how Wordpress handles plugin publishing so that I may publish additional plugins.</p>
 
 == Installation ==
 
 <ol>
-<li>Upload the <span style="font-weight: bold;">redirectit</span> directory to your <span style="font-weight: bold;">plugins</span> .</li>
-<li>In Wordpress management panel activate "<span style="font-weight: bold;">Cleverwise Redirect It</span> " plugin.</li>
-<li>A new menu option "<span style="font-weight: bold;">Redirect It</span> " will appear on your main menu (under Comments)</li>
-<li>Once you have loaded the main panel for the plugin click on the "<span style="font-weight: bold;">Help Guide</span> " link which explains in detail how to use the plugin</li>
+<li>Upload the <strong>cleverwise-redirect-it</strong> directory to your plugins.</li>
+<li>In Wordpress management panel activate "<strong>Cleverwise Redirect It</strong>" plugin.</li>
+<li>A new menu option "<strong>Redirect It</strong>" will appear on your main menu (under Comments).</li>
+<li>Once you have loaded the main panel for the plugin click on the "<strong>Help Guide</strong>" link which explains in detail how to use the plugin.</li>
 </ol>
 
 == Frequently Asked Questions ==

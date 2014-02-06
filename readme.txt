@@ -53,9 +53,6 @@ Very doubtful.  It is hard to say for sure the exact length due to various link 
 
 `http://www.somesite.tld/parent_category/sub_category/sub_sub_category/sub_sub_sub_category/now_a_really_long_page_name_to_equal_one_hundred_and_fifty/`
 
-== Screenshots ==
-
-
 == Changelog ==
 
 = 1.1 =

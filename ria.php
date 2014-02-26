@@ -78,10 +78,23 @@ Global $wpdb,$ri_wp_option,$ri_wp_option_updates_txt,$cw_redirect_it_tbl,$cwfa_r
 	////////////////////////////////////////////////////////////////////////////
 	if ($cw_action == 'redirectbuild') {
 
-		$redirect_abspath=$redirect_abspath.$redirect_filename;
+		// 	Is writeable?
+		$writeable='y';
 
-		//	If redirect file isn't writeable issue error
+		//	Is redirect file directory writeable?
 		if (!is_writeable($redirect_abspath)) {
+			$writeable='n';
+		}
+		$redirect_abspath .=$redirect_filename;
+
+		//	If redirect file directory isn't writeable is file?
+		if ($writeable == 'n') { 
+			if (is_writeable($redirect_abspath)) {
+				$writeable='y';
+			}
+		}
+
+		if ($writeable == 'n') {
 			$cw_redirect_it_html='<p style="font-weight: bold; color: #ff0000; font-size: 14px;">FAILURE! Redirect file is NOT writeable!</p><p>This needs to be corrected before redirect file may be generated!  Often this is caused by an incorrect permission setting on the web server.  Please check your configuration.</p>';
 		} else {
 
@@ -660,9 +673,15 @@ EOM;
 $cw_redirect_it_html .=<<<EOM
 <form method="post">
 <input type="hidden" name="cw_action" value="settingsv">
-<p>Redirect File Name:<div style="margin-left: 20px;">Set the name of the file that will hold your redirects (path below).  It should end in .php.<br>Note: Must be writeable by server. The easy way is having the whole directory/folder this file will be located in writeable (chmod 777 or in permission tab check all).  The secure way is only having this file writeable (777 or 666), however for first time setups you'll need to manually create a file first (use "touch" or simply upload a file with this name).</div></p>
+<p>Redirect File Name:<div style="margin-left: 20px;">Set the name of the file that will hold your redirects (path below).  It should end in .php. <a href="javascript:void(0);" onclick="document.getElementById('cwfp').style.display='';">View file permission notes!</a>
+<div style="display: none;" id="cwfp" name="cwfp"><p>The filename you specify below must be writeable by your website/server.</p>
+<p>Most setups: The easy way is having the whole directory/folder this file will be located in writeable (chmod 777 or in permission tab check all).  The secure way is only having this file writeable (777 or 666), however for first time setups you'll need to manually create a file first (use "touch" or simply upload a file with this name).</p>
+<p>Some hosts like HostGator don't allow files and folders/directories to use 666 or 777.  If this is the case 755 works.</p>
+<p>Confused? Then just finish this setup and try to create the redirect file.  If it works great! If not upload any file from your computer to your hosting and name it redirectit.php (or whatever you choose below) then change the permissions to 777 or 666.  Now try to create the redirect file.</p>
+</div>
+</div></p>
 <p><input type="text" name="redirect_filename" value="$redirect_filename" style="width: 150px;"></p>
-<p>Absolute Path To Redirect File:<div style="margin-left: 20px;">Set the absolute path for directory/folder that will contain the redirect file from above.</div></p>
+<p>Absolute Path To Redirect File:<div style="margin-left: 20px;">Set the absolute path for the directory/folder that will contain the redirect file from above.  The plugin makes the best guess and enters that below.  However unless you want the redirect file in its own folder/directory you should be able to skip this setting.  If you are receiving errors then change this to "../" (no quotes though).  That is dot dot forward slash</div></p>
 <p><input type="text" name="redirect_abspath" value="$redirect_abspath" style="width: 400px;"></p>
 <p>URL Type:<div style="margin-left: 20px;">More information in "Help Guide".  If you are unsure just leave as "Standard".</div></p>
 <p><select name="redirect_url_type">$redirect_url_type_list</select></p>
@@ -691,7 +710,7 @@ $cw_redirect_it_html .=<<<EOM
 <p>Steps:</p>
 <ol>
 <li>Setup the information in Settings.  If necessary setup rewrite rule. (See Advanced URL Type section)</li>
-<li>Add some redirects.  Do keep in mind no two redirects may have the same name as this system uses the name as part of the link redirect URL.  (Why not use a number? We don't want people to be able to simple start trying your redirects by changing a number.  You might have some secret ones! ;-)</li>
+<li>Add some redirects.  Do keep in mind no two redirects may have the same name as this system uses the name as part of the link redirect URL.  (Why not use a number? We don't want people to be able to simply start trying your redirects by changing a number.  You might have some secret ones! ;-)</li>
 <li>Run the Build Redirect File function.</li>
 <li>View redirect entries/records to get outgoing links and start using them on your site, in your emails, and around the Internet.</li>
 <li>Add and edit redirects as needed, but don't forget to run the Build Redirect File function.</li>
@@ -719,6 +738,12 @@ EOM;
 
 $cw_redirect_it_html .=<<<EOM
 <p>The following lists the new changes from version-to-version.</p>
+<p>Version: <b>1.2</b></p>
+<ul style="list-style: disc; margin-left: 25px;">
+<li>Permissions check bug fix</li>
+<li>Added additional notes to redirect file permissions (Settings screen)</li>
+<li>Added footer links</li>
+</ul>
 <p>Version: <b>1.1</b></p>
 <ul style="list-style: disc; margin-left: 25px;">
 <li>Altered framework code to fit Wordpress Plugin Directory terms</li>
@@ -787,6 +812,9 @@ print <<<EOM
 <p style="margin: -6px 0px 3px 0px;">* Redirect File Status: $redirect_file_status</p>
 <p style="width: 400px; border: 1px solid #ab5c23; padding: 5px; font-size: 14px;">Action: <span style="color: #ab5c23;">$cw_redirect_it_action</span></p>
 <p>$cw_redirect_files_html</p>
+<div style="width: 400px; margin-top: 40px; border-top: 1px dashed #000000; font-size: 12px; face-family: tahoma;"><i>Open in new windows:</i><br>
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7VJ774KB9L9Z4" target="_blank">Donate - Thank You!</a> | <a href="http://wordpress.org/support/plugin/cleverwise-redirect-it" target="_blank">Get Support</a> | <a href="http://wordpress.org/support/view/plugin-reviews/cleverwise-redirect-it" target="_blank">Review Plugin</a> | <a href="http://www.cyberws.com/cleverwise-plugins/plugin-suggestion/" target="_blank">Suggest Plugin</a><br>
+<a href="http://www.cyberws.com/cleverwise-plugins" target="_blank">Cleverwise Plugins</a> | <a href="http://www.cyberws.com/professional-technical-consulting/" target="_blank">Wordpress +PHP,Server Consulting</a></div>
 </div>
 EOM;
 }

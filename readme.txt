@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: cyberws
 Donate link: http://www.cyberws.com/cleverwise-plugins/
-Tags: redirect, url, link
+Tags: redirect, redirects, redirection, url, urls, link, links
 Requires at least: 3.0.1
 Tested up to: 3.8.1
 Stable tag: 1.1
@@ -19,8 +19,6 @@ Allows you to easily handle redirects to an unlimited number of offsite and onsi
 <p>In addition you are able to easily search through your redirect records to quickly locate matches.  Plus you have total control over where visitors are sent if plugin can't find a redirect match.  All of this is easily changable at any time through Wordpress.</p>
 
 <p>Language Support: Should work for all languages that use the A-Z alphabet.  Plugin only displays text (link names) entered by you.  The only limitation is possible removal of unknown characters outside standard A-Z.</p>
-
-<p>I will add some screenshots and more information shortly.  Unfortunately I just got hit with some server upgrades. However feel free to ask questions and make commets about the plugin.  Finally while I am a seasoned PHP programmer and server admin I am still learning how Wordpress handles plugin publishing so that I may publish additional plugins.</p>
 
 == Installation ==
 
@@ -53,7 +51,16 @@ Very doubtful.  It is hard to say for sure the exact length due to various link 
 
 `http://www.somesite.tld/parent_category/sub_category/sub_sub_category/sub_sub_sub_category/now_a_really_long_page_name_to_equal_one_hundred_and_fifty/`
 
+== Screenshots ==
+
+1. screenshot-1.jpg
+
 == Changelog ==
+
+= 1.2 =
+Permissions check bug fix
+Added additional notes to redirect file permissions (Settings screen)
+Added footer links
 
 = 1.1 =
 Altered framework code to fit Wordpress Plugin Directory terms
@@ -63,5 +70,5 @@ Initial release of plugin
 
 == Upgrade Notice ==
 
-= 1.1 =
-Altered framework code to fit Wordpress Plugin Directory terms.
+= 1.2 =
+Bug fix, additional permission notes, and footer links

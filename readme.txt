@@ -76,5 +76,5 @@ Initial release of plugin
 
 == Upgrade Notice ==
 
-= 1.2 =
-Bug fix, additional permission notes, and footer links
+= 1.3 =
+UI changes and typos fixed

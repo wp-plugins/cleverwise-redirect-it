@@ -4,7 +4,7 @@ Donate link: http://www.cyberws.com/cleverwise-plugins/
 Tags: redirect, redirects, redirection, url, urls, link, links
 Requires at least: 3.0.1
 Tested up to: 3.8.1
-Stable tag: 1.1
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,6 +19,8 @@ Allows you to easily handle redirects to an unlimited number of offsite and onsi
 <p>In addition you are able to easily search through your redirect records to quickly locate matches.  Plus you have total control over where visitors are sent if plugin can't find a redirect match.  All of this is easily changable at any time through Wordpress.</p>
 
 <p>Language Support: Should work for all languages that use the A-Z alphabet.  Plugin only displays text (link names) entered by you.  The only limitation is possible removal of unknown characters outside standard A-Z.</p>
+
+<p>Shameless Promotion: See other <a href="http://wordpress.org/plugins/search.php?q=cleverwise">Cleverwise Wordpress Directory Plugins</a></p>
 
 == Installation ==
 
@@ -41,7 +43,7 @@ Yes! If you have a really busy site no problem.  When a visitor clicks on a link
 
 = Wait! This plugin is storing everything in a file? =
 
-Well yes and no.  All data is stored in the database but redirection doesn't occur straight from the database.  Once you have the redirects the way you want the plugin will generate a file and that's what redirects visitors.  If you use a PHP script caching system like APC the speed will be lightning fast even with large files.  Caching is the name of the game with speed.  It usually refers to pulling data out of the database (or dynamic source) and storing it statically.  Hence this method.
+Well yes and no.  All data is stored in the database but redirection doesn't occur straight from the database.  Once you have the redirects the way you want the plugin will generate a file and that's what redirects visitors.  If you use a PHP script caching system like APC or Zend OPcache the speed will be lightning fast even with large files.  Caching is the name of the game with speed.  It usually refers to pulling data out of the database (or dynamic source) and storing it statically.  Hence this method.
 
 = Won't the redirect file be huge? =
 
@@ -57,9 +59,13 @@ Very doubtful.  It is hard to say for sure the exact length due to various link 
 
 == Changelog ==
 
+= 1.3 =
+UI changes<br>
+Fixed: Typos
+
 = 1.2 =
-Permissions check bug fix
-Added additional notes to redirect file permissions (Settings screen)
+Permissions check bug fix<br>
+Added additional notes to redirect file permissions (Settings screen)<br>
 Added footer links
 
 = 1.1 =

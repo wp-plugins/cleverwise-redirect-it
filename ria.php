@@ -100,15 +100,24 @@ Global $wpdb,$ri_wp_option,$ri_wp_option_updates_txt,$cw_redirect_it_tbl,$cwfa_r
 
 			//	Grab redirects from database
 			$redirectlist='';
-			$myrows=$wpdb->get_results("SELECT ri_link_name,ri_link_code,ri_link_url FROM $cw_redirect_it_tbl where ri_link_type='s'");
+			$myrows=$wpdb->get_results("SELECT ri_link_name,ri_link_code,ri_link_url,ri_link_aliases FROM $cw_redirect_it_tbl where ri_link_type='s'");
 			if ($myrows) {
 				foreach ($myrows as $myrow) {
 					$ri_link_name=$cwfa_ri->cwf_fmt_sth(strtolower($myrow->ri_link_name));
 					$ri_link_code=$cwfa_ri->cwf_san_alls(stripslashes($myrow->ri_link_code));
 					$ri_link_url=$cwfa_ri->cwf_san_url(stripslashes($myrow->ri_link_url));
+					$ri_link_aliases=$cwfa_ri->cwf_fmt_sth(strtolower($myrow->ri_link_aliases));
 
-					if ($redirectlist) {$redirectlist .=',';}
-					$redirectlist .='\''.$ri_link_name.'\''.'=>'.'\''.$ri_link_url.'\'';
+					$ri_link_ids=array();
+					if ($ri_link_aliases) {
+						$ri_link_ids=explode('|',$ri_link_aliases);
+						array_pop($ri_link_ids);
+					} 
+					array_push($ri_link_ids,"$ri_link_name");
+
+					foreach ($ri_link_ids as $ri_link_id) {
+						$redirectlist .='\''.$ri_link_id.'\''.'=>'.'\''.$ri_link_url.'\',';
+					}
 				}
 			}
 
@@ -125,7 +134,7 @@ Layout: 010114
 \$redirects=array($redirectlist);
 
 \$l='skip';
-\$rourl="$redirect_no_match_url";
+\$rourl='$redirect_no_match_url';
 
 if (isset(\$_REQUEST['l'])) {
 	\$l=\$_REQUEST['l'];
@@ -176,6 +185,8 @@ EOM;
 		$ri_link_type='s';
 		$ri_link_url='';
 		$ri_link_notes='';
+		$ri_link_aliases='';
+		$ri_link_aliases_links='';
 
 		$cw_redirect_it_action_btn='Add';
 		if ($cw_action == 'redirectedit') {
@@ -183,7 +194,7 @@ EOM;
 
 			$ri_link_id=$cwfa_ri->cwf_san_int($_REQUEST['ri_link_id']);
 
-			$myrows=$wpdb->get_results("SELECT ri_link_addts,ri_link_edits,ri_link_name,ri_link_code,ri_link_type,ri_link_url,ri_link_notes FROM $cw_redirect_it_tbl where ri_link_id='$ri_link_id'");
+			$myrows=$wpdb->get_results("SELECT ri_link_addts,ri_link_edits,ri_link_name,ri_link_code,ri_link_type,ri_link_url,ri_link_notes,ri_link_aliases FROM $cw_redirect_it_tbl where ri_link_id='$ri_link_id'");
 			if ($myrows) {
 				foreach ($myrows as $myrow) {
 					$ri_link_addts=$cwfa_ri->cwf_san_int($myrow->ri_link_addts);
@@ -193,6 +204,7 @@ EOM;
 					$ri_link_type=$cwfa_ri->cwf_san_an($myrow->ri_link_type);
 					$ri_link_url=$cwfa_ri->cwf_san_url(stripslashes($myrow->ri_link_url));
 					$ri_link_notes=$cwfa_ri->cwf_san_alls(stripslashes($myrow->ri_link_notes));
+					$ri_link_aliases=$cwfa_ri->cwf_san_ansrp(stripslashes($myrow->ri_link_aliases));
 				}
 			}
 		}
@@ -207,6 +219,10 @@ EOM;
 				$redirect_type_list .=' checked';
 			}
 			$redirect_type_list .='>'.$redirect_type_name.'&nbsp;&nbsp;&nbsp;';
+		}
+
+		if ($ri_link_aliases) {
+			$ri_link_aliases=preg_replace('/\|/',"\n",$ri_link_aliases);
 		}
 
 		if ($cw_action == 'redirecteditsv') {
@@ -235,16 +251,45 @@ $cw_redirect_it_html .=<<<EOM
 <p><form method="get" style="margin: 0px; padding: 0px;"><textarea name="disp_redirect_url" style="width: 400px; height: 100px;">$disp_redirect_url</textarea></form></p>
 <hr style="width: 400px; border: 1px dotted #000000;" align="left">Edit Redirect Record<hr style="width: 400px; border: 1px dotted #000000;" align="left">
 EOM;
+			if ($ri_link_aliases) {
+				$ri_link_aliases_links=explode("\n",$ri_link_aliases);
+				array_pop($ri_link_aliases_links);
+				$ri_alias_cnt='0';
+				foreach ($ri_link_aliases_links as $ri_link_aliases_link) {
+					$ri_link_aliases_link=$cwfa_ri->cwf_fmt_sth($ri_link_aliases_link);
+					if ($redirect_url_type == 'a') {
+						$ri_link_aliases_link=$redirect_site_url.$ri_link_aliases_link;
+					} else {
+						$ri_link_aliases_link=$redirect_site_url.$redirect_filename.'?l='.$ri_link_aliases_link;
+					}
+					//$ri_link_aliases_link='<a href="'.$ri_link_aliases_link.'" target="_blank">'.$ri_link_aliases_link.'</a>';
+					$ri_link_aliases_links[$ri_alias_cnt]=$ri_link_aliases_link;
+					$ri_alias_cnt++;
+				}
+				if ($ri_link_aliases_links) {
+					$ri_link_aliases_links=implode("\n",$ri_link_aliases_links);
+				}
+			}
 		}
 
 $cw_redirect_it_html .=<<<EOM
 <form method="post">
 <input type="hidden" name="cw_action" value="$cw_action">
 <input type="hidden" name="ri_link_id" value="$ri_link_id">
-<p>Name:<div style="margin: -12px 0px 5px 20px; font-size: 11px;">Becomes part of URL, upper case converted to lower case, and spaces converted to hyphens.  IMPORTANT: Do NOT change after live linking as this will alter URL</div><input type="text" name="ri_link_name" value="$ri_link_name" style="width: 300px;"></p>
+<p>Name:<div style="margin: -12px 0px 5px 20px; font-size: 11px;">Becomes part of URL, upper case converted to lower case, and spaces converted to hyphens.  IMPORTANT: If you change the name you'll need to add the old one as an alias to still reach destination URL.</div><input type="text" name="ri_link_name" value="$ri_link_name" style="width: 300px;"></p>
 <p>Destination URL:<div style="margin: -12px 0px 5px 20px; font-size: 11px;">Paste FULL destination URL including http:// or https://</div><textarea name="ri_link_url" style="width: 400px; height: 100px;">$ri_link_url</textarea></p>
 <p>Type: $redirect_type_list</p>
 <p>Notes:<div style="margin: -12px 0px 5px 20px; font-size: 11px;">500 characters max; not included in redirect file</div><textarea name="ri_link_notes" style="width: 400px; height: 100px;">$ri_link_notes</textarea></p>
+<p>Aliases:<div style="margin: -12px 0px 5px 20px; font-size: 11px;">You may enter additional names for this link.  All aliases will use the above destination URL.  Enter one alias per line.  Spaces will be converted to hyphens and all characters will be converted to lower case.</div><textarea name="ri_link_aliases" style="width: 400px; height: 100px;">$ri_link_aliases</textarea></p>
+EOM;
+
+if ($ri_link_aliases_links) {
+$cw_redirect_it_html .=<<<EOM
+<p><div name="aliaslinks" id="aliaslinks"><p>Aliases Links: <a href="javascript:void(0);" onclick="document.getElementById('aliaslinks').style.display='none';document.getElementById('saliaslinks').style.display='';">Show/Open</a></p></div><div name="saliaslinks" id="saliaslinks" style="display: none;"><p>Aliases Links: <a href="javascript:void(0);" onclick="document.getElementById('aliaslinks').style.display='';document.getElementById('saliaslinks').style.display='none';">Hide/Close</a><div style="margin: -12px 0px 5px 20px; font-size: 11px;">Below are saved link aliases in ready-to-go link format.</div><textarea name="ri_link_aliases_links" style="width: 400px; height: 100px;">$ri_link_aliases_links</textarea></p></div></p>
+EOM;
+}
+
+$cw_redirect_it_html .=<<<EOM
 <p><input type="submit" value="$cw_redirect_it_action_btn" class="button">
 </form>
 EOM;
@@ -276,6 +321,7 @@ EOM;
 		$ri_link_type=$cwfa_ri->cwf_san_an($_REQUEST['ri_link_type']);
 		$ri_link_url=$cwfa_ri->cwf_san_url($_REQUEST['ri_link_url']);
 		$ri_link_notes=$cwfa_ri->cwf_san_alls($_REQUEST['ri_link_notes']);
+		$ri_link_aliases=$cwfa_ri->cwf_san_ansrp($_REQUEST['ri_link_aliases']);
 
 		$error='';
 
@@ -292,7 +338,43 @@ EOM;
 				}
 			}
 			if ($ri_link_id_chk > '0' and $ri_link_id_chk != $ri_link_id) {
-				$error .='<li>Redirect name already in use</li>';
+				$error .='<li>Redirect name already in use as profile name</li>';
+			}
+
+			if ($ri_link_aliases) {
+				//	Check aliases
+				$ri_link_aliases=explode("\n",$ri_link_aliases);
+				$ri_link_aliases=array_unique($ri_link_aliases);
+
+				isset($ri_link_aliases_exist);
+				$ri_link_loop_cnt='0';
+				foreach ($ri_link_aliases as $ri_link_aliases_chk) {
+					$ri_link_id_chk='0';
+					$ri_link_aliases_chk=$cwfa_ri->cwf_fmt_striptrim($ri_link_aliases_chk);
+					$ri_link_aliases_chk=$cwfa_ri->cwf_san_ans($ri_link_aliases_chk);
+					if (!$ri_link_aliases_chk) {
+						unset($ri_link_aliases[$ri_link_loop_cnt]);
+					} else {
+						$ri_link_aliases[$ri_link_loop_cnt]=$ri_link_aliases_chk;
+						$myrows=$wpdb->get_results("SELECT ri_link_id FROM $cw_redirect_it_tbl where ri_link_name like '$ri_link_aliases_chk' or ri_link_aliases like '%$ri_link_aliases_chk|%'");
+						if ($myrows) {
+							foreach ($myrows as $myrow) {
+								$ri_link_id_chk=$cwfa_ri->cwf_san_int($myrow->ri_link_id);
+							}
+						}
+						if ($ri_link_id_chk > '0' and $ri_link_id_chk != $ri_link_id) {
+							$ri_link_aliases_exist .=$ri_link_aliases_chk."\n";
+						}
+					}
+					$ri_link_loop_cnt++;
+				}
+
+				if ($ri_link_aliases_exist) {
+					$ri_link_aliases_exist=trim($ri_link_aliases_exist);
+					$ri_link_aliases_exist=preg_replace('/\n/',', ',$ri_link_aliases_exist);
+					$error .='<li>Redirect alias(es) already in use include: '.$ri_link_aliases_exist.'</li>';
+				}
+				unset($ri_link_aliases_exist);
 			}
 		}
 
@@ -307,12 +389,19 @@ EOM;
 		} else {
 			$cw_redirect_it_action='Success';
 
+			if ($ri_link_aliases) {
+				$ri_link_aliases=array_unique($ri_link_aliases);
+				$ri_link_aliases=implode('|',$ri_link_aliases);
+				$ri_link_aliases .='|';
+			}
+
 			$data=array();
 			$data['ri_link_name']=$ri_link_name;
 			$data['ri_link_code']=$ri_link_code;
 			$data['ri_link_type']=$ri_link_type;
 			$data['ri_link_url']=$ri_link_url;
 			$data['ri_link_notes']=$ri_link_notes;
+			$data['ri_link_aliases']=$ri_link_aliases;
 			
 			if ($cw_action == 'redirecteditsv') {
 				$data['ri_link_edits']=$ri_link_edits;
@@ -369,7 +458,7 @@ EOM;
 			$ri_wheresql="ri_link_type='$sstatus' and";
 			$statusword=$redirect_types[$sstatus].' status';
 		} 
-		$ri_wheresql .='(ri_link_name like "%'.$sbox.'%" or ri_link_url like "%'.$sbox.'%" or ri_link_notes like "%'.$sbox.'%")';
+		$ri_wheresql .='(ri_link_name like "%'.$sbox.'%" or ri_link_url like "%'.$sbox.'%" or ri_link_notes like "%'.$sbox.'%" or ri_link_aliases like "%'.$sbox.'%")';
 		$ri_wherelink="sbox=$sboxlink&sstatus=$sstatus";
 		$ri_form='<input type="hidden" name="sbox" value="'.$sbox.'"><input type="hidden" name="sstatus" value="'.$sstatus.'">';
 
@@ -436,7 +525,7 @@ EOM;
 			$enum=$cwfa_ri->cwf_san_int($enum);
 			$search_cnt=$cwfa_ri->cwf_san_int($search_cnt);
 		} else {
-			$search_results='<li>No records</li>';
+			$search_results='<li>Sorry, no matching records...  <a href="javascript:history.go(-1);">Continue</a></li>';
 		}
 
 		//	Build Page List
@@ -738,6 +827,10 @@ EOM;
 
 $cw_redirect_it_html .=<<<EOM
 <p>The following lists the new changes from version-to-version.</p>
+<p>Version: <b>1.4</b></p>
+<ul style="list-style: disc; margin-left: 25px;">
+<li>Link alias support</li>
+</ul>
 <p>Version: <b>1.3</b></p>
 <ul style="list-style: disc; margin-left: 25px;">
 <li>UI changes</li>
@@ -809,6 +902,7 @@ EOM;
 //	Print out to browser (wp)
 ////////////////////////////////////////////////////////////////////////////
 function cw_redirect_it_admin_browser($cw_redirect_files_html,$cw_redirect_it_action,$redirect_file_status) {
+$cw_plugin_name='cleverwise-redirect-it';
 print <<<EOM
 <style type="text/css">
 #cws-wrap {margin: 20px 20px 20px 0px;}
@@ -828,7 +922,7 @@ print <<<EOM
 <p style="font-size: 13px; font-weight: bold;">Current: <span style="color: #ab5c23;">$cw_redirect_it_action</span></p>
 <p>$cw_redirect_files_html</p>
 <div id="cws-resources" name="cws-resources"><div id="cws-inner" name="cws-inner">Resources (open in new windows):<br>
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7VJ774KB9L9Z4" target="_blank">Donate - Thank You!</a> | <a href="http://wordpress.org/support/plugin/cleverwise-redirect-it" target="_blank">Get Support</a> | <a href="http://wordpress.org/support/view/plugin-reviews/cleverwise-redirect-it" target="_blank">Review Plugin</a> | <a href="http://www.cyberws.com/cleverwise-plugins/plugin-suggestion/" target="_blank">Suggest Plugin</a><br>
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7VJ774KB9L9Z4" target="_blank">Donate - Thank You!</a> | <a href="http://wordpress.org/support/plugin/$cw_plugin_name" target="_blank">Get Support</a> | <a href="http://wordpress.org/support/view/plugin-reviews/$cw_plugin_name" target="_blank">Review Plugin</a> | <a href="http://www.cyberws.com/cleverwise-plugins/plugin-suggestion/" target="_blank">Suggest Plugin</a><br>
 <a href="http://www.cyberws.com/cleverwise-plugins" target="_blank">Cleverwise Plugins</a> | <a href="http://www.cyberws.com/professional-technical-consulting/" target="_blank">Wordpress +PHP,Server Consulting</a></div></div>
 </div>
 EOM;

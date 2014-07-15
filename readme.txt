@@ -3,8 +3,8 @@ Contributors: cyberws
 Donate link: http://www.cyberws.com/cleverwise-plugins/
 Tags: redirect, redirects, redirection, url, urls, link, links
 Requires at least: 3.0.1
-Tested up to: 3.9
-Stable tag: 1.3
+Tested up to: 3.9.1
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,13 +14,17 @@ Allows you to easily handle redirects to an unlimited number of offsite and onsi
 
 <p>Once this plugin has been installed you'll easily be able to manage all your site redirects. In fact the plugin has no limits to the number of redirects you may manage. It works from dozens to millions <i>(although you'll need more than budget hosting for millions).  All this is done through your familiar Wordpress control panel.</i></p>
 
-<p>You add redirect links, assign them unique names (so visitors can't start guessing all your links), have the ability to enter notes (optional), and may even turn redirects on and off.  This allows you to disable links that you don't want redirected out but aren't quite ready to delete.</p>
+<p>You add redirect links, assign them unique names (so visitors can't start guessing all your links), have the ability to enter notes (optional), and may even turn redirects on and off.  This allows you to disable links that you don't want redirected out but aren't quite ready to delete.  Now link aliases are supported!</p>
 
-<p>In addition you are able to easily search through your redirect records to quickly locate matches.  Plus you have total control over where visitors are sent if plugin can't find a redirect match.  All of this is easily changable at any time through Wordpress.</p>
+<p>Link aliases allow you to share the same destination URL for multiple names.  This provides several advantages.  For starters you may easily change your link names/titles without voiding the old ones.  Also there are times when targeted link names work better.  For example you might have a link to wrinkle cream and thus use wrinklecream, facialcream, fightwrinkles, etc.  These names could be used in different articles, emails, forums, etc.  While you could do this before it required a new redirect profile for each link name/title.  The old method wasn't a deal killer but it made management more of a hassle if you had to change the destination URL as you had to remember to change it for all profiles.  Plus it wasn't as easy to see all the links using the same destination URL.  Well those days are gone with link aliases! So go ahead and get creative!</p>
+
+<p>Also you are able to easily search through your redirect records to quickly locate matches.  Plus you have total control over where visitors are sent if plugin can't find a redirect match.  All of this is easily changable at any time through Wordpress.</p>
 
 <p>Language Support: Should work for all languages that use the A-Z alphabet.  Plugin only displays text (link names) entered by you.  The only limitation is possible removal of unknown characters outside standard A-Z.</p>
 
 <p>Shameless Promotion: See other <a href="http://wordpress.org/plugins/search.php?q=cleverwise">Cleverwise Wordpress Directory Plugins</a></p>
+
+<p>Thanks for looking at the Cleverwise Plugin Series! To help out the community reviews and comments are highly encouraged.  If you feel you can't leave a good review I would greatly appreciate opening a support ticket before hand to see if I can address your concern(s).  Enjoy!</p>
 
 == Installation ==
 
@@ -59,12 +63,15 @@ Very doubtful.  It is hard to say for sure the exact length due to various link 
 
 == Changelog ==
 
+= 1.4 =
+Link alias support<br>
+
 = 1.3 =
 UI changes<br>
 Fixed: Typos
 
 = 1.2 =
-Permissions check bug fix<br>
+Fixed: Permissions check bug fix<br>
 Added additional notes to redirect file permissions (Settings screen)<br>
 Added footer links
 
@@ -76,5 +83,5 @@ Initial release of plugin
 
 == Upgrade Notice ==
 
-= 1.3 =
-UI changes and typos fixed
+= 1.4 =
+Link aliases now supported

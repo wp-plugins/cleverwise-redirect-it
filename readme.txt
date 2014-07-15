@@ -24,7 +24,7 @@ Allows you to easily handle redirects to an unlimited number of offsite and onsi
 
 <p>Shameless Promotion: See other <a href="http://wordpress.org/plugins/search.php?q=cleverwise">Cleverwise Wordpress Directory Plugins</a></p>
 
-<p>Thanks for looking at the Cleverwise Plugin Series! To help out the community reviews and comments are highly encouraged.  If you feel you can't leave a good review I would greatly appreciate opening a support ticket before hand to see if I can address your concern(s).  Enjoy!</p>
+<p>Thanks for looking at the Cleverwise Plugin Series! To help out the community reviews and comments are highly encouraged.  If you can't leave a good review I would greatly appreciate opening a support thread before hand to see if I can address your concern(s).  Enjoy!</p>
 
 == Installation ==
 

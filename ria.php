@@ -827,6 +827,10 @@ EOM;
 
 $cw_redirect_it_html .=<<<EOM
 <p>The following lists the new changes from version-to-version.</p>
+<p>Version: <b>1.5</b></p>
+<ul style="list-style: disc; margin-left: 25px;">
+<li>Fixed: New installs of version 1.4 failed to work correctly</li>
+</ul>
 <p>Version: <b>1.4</b></p>
 <ul style="list-style: disc; margin-left: 25px;">
 <li>Link alias support</li>
@@ -937,7 +941,7 @@ function cw_redirect_it_activate() {
 
 	$ri_wp_option_db_version=get_option($ri_wp_option_version_txt);
 
-//	Create category table
+//	Create redirect it table
 	$table_name=$cw_redirect_it_tbl;
 $sql .=<<<EOM
 CREATE TABLE IF NOT EXISTS `$table_name` (
@@ -949,6 +953,7 @@ CREATE TABLE IF NOT EXISTS `$table_name` (
   `ri_link_type` char(1) NOT NULL,
   `ri_link_url` varchar(250) NOT NULL,
   `ri_link_notes` varchar(500) NOT NULL,
+  `ri_link_aliases` text NOT NULL,
   PRIMARY KEY (`ri_link_id`),
   KEY `ri_link_name` (`ri_link_name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;

@@ -4,7 +4,7 @@ Donate link: http://www.cyberws.com/cleverwise-plugins/
 Tags: redirect, redirects, redirection, url, urls, link, links
 Requires at least: 3.0.1
 Tested up to: 3.9.1
-Stable tag: 1.4
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,8 +63,11 @@ Very doubtful.  It is hard to say for sure the exact length due to various link 
 
 == Changelog ==
 
+= 1.5 =
+Fixed: New installs of version 1.4 failed to work correctly
+
 = 1.4 =
-Link alias support<br>
+Link alias support
 
 = 1.3 =
 UI changes<br>
@@ -83,5 +86,5 @@ Initial release of plugin
 
 == Upgrade Notice ==
 
-= 1.4 =
-Link aliases now supported
+= 1.5 =
+Fixed: New installs of version 1.4 failed to work correctly

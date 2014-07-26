@@ -2,7 +2,7 @@
 /**
 * Plugin Name: Cleverwise Redirect It
 * Description: Manage link redirects easily through this powerful plugin.  By using this plugin you may easily control external (or even internal) links with ease.  After adding a destination link into the system you will be provided with a link at your domain name.  This provides several advantages.  First if the destination link ever changes no problem.  You simply change it in one location and all links to it are updated.  Second you are building your domain brand since the outbound links use your domain.  Third there is no way for a visitor to tell the link destination without clicking on it, which helps save affiliate commissions.  Fourth it works well for emails as you can shorten outbound links with variables in them.
-* Version: 1.4
+* Version: 1.5
 * Author: Jeremy O'Connell
 * Author URI: http://www.cyberws.com/cleverwise-plugins/
 * License: GPL2 .:. http://opensource.org/licenses/GPL-2.0
@@ -19,7 +19,7 @@ $cwfa_ri=new cwfa_ri;
 ////////////////////////////////////////////////////////////////////////////
 Global $wpdb,$ri_wp_option_version_txt,$ri_wp_option,$ri_wp_option_version_num;
 
-$ri_wp_option_version_num='1.4';
+$ri_wp_option_version_num='1.5';
 $ri_wp_option='redirect_it';
 $ri_wp_option_version_txt=$ri_wp_option.'_version';
 $ri_wp_option_updates_txt=$ri_wp_option.'_updates';
@@ -46,10 +46,24 @@ if (is_admin()) {
 	Global $wpdb;
 	$ri_wp_option_db_version=get_option($ri_wp_option_version_txt);
 	if ($ri_wp_option_db_version < $ri_wp_option_version_num) {
-		//	Add new aliases colum
-		if ($ri_wp_option_db_version < '1.4') {
+
+		//	Check for aliases column
+		$ri_link_aliases_gen='1';
+		$myrows=$wpdb->get_results("SHOW COLUMNS FROM $cw_redirect_it_tbl");
+		if ($myrows) {
+			foreach ($myrows as $myrow) {
+				//	Check for ri_link_aliases
+				if ($myrow->Field == 'ri_link_aliases') {
+					$ri_link_aliases_gen='0';
+				}
+			}
+		}
+		//	Add new aliases column
+		if ($ri_link_aliases_gen == '1') {
 			$wpdb->query("alter table $cw_redirect_it_tbl ADD ri_link_aliases TEXT NOT NULL");
 		}
+		unset($ri_link_aliases_gen);
+
 		update_option($ri_wp_option_version_txt,$ri_wp_option_version_num);
 	}
 }

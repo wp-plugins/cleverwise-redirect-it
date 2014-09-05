@@ -283,11 +283,11 @@ $cw_redirect_it_html .=<<<EOM
 <p>Aliases:<div style="margin: -12px 0px 5px 20px; font-size: 11px;">You may enter additional names for this link.  All aliases will use the above destination URL.  Enter one alias per line.  Spaces will be converted to hyphens and all characters will be converted to lower case.</div><textarea name="ri_link_aliases" style="width: 400px; height: 100px;">$ri_link_aliases</textarea></p>
 EOM;
 
-if ($ri_link_aliases_links) {
+		if ($ri_link_aliases_links) {
 $cw_redirect_it_html .=<<<EOM
 <p><div name="aliaslinks" id="aliaslinks"><p>Aliases Links: <a href="javascript:void(0);" onclick="document.getElementById('aliaslinks').style.display='none';document.getElementById('saliaslinks').style.display='';">Show/Open</a></p></div><div name="saliaslinks" id="saliaslinks" style="display: none;"><p>Aliases Links: <a href="javascript:void(0);" onclick="document.getElementById('aliaslinks').style.display='';document.getElementById('saliaslinks').style.display='none';">Hide/Close</a><div style="margin: -12px 0px 5px 20px; font-size: 11px;">Below are saved link aliases in ready-to-go link format.</div><textarea name="ri_link_aliases_links" style="width: 400px; height: 100px;">$ri_link_aliases_links</textarea></p></div></p>
 EOM;
-}
+		}
 
 $cw_redirect_it_html .=<<<EOM
 <p><input type="submit" value="$cw_redirect_it_action_btn" class="button">
@@ -317,7 +317,10 @@ EOM;
 		$ri_link_addts=time();
 		$ri_link_edits=time();
 		$ri_link_name=$cwfa_ri->cwf_san_ans($_REQUEST['ri_link_name']);
-		$ri_link_code=$cwfa_ri->cwf_san_alls($_REQUEST['ri_link_code']);
+		$ri_link_code='';
+		if (isset($_REQUEST['ri_link_code'])) {
+			$ri_link_code=$cwfa_ri->cwf_san_alls($_REQUEST['ri_link_code']);
+		}
 		$ri_link_type=$cwfa_ri->cwf_san_an($_REQUEST['ri_link_type']);
 		$ri_link_url=$cwfa_ri->cwf_san_url($_REQUEST['ri_link_url']);
 		$ri_link_notes=$cwfa_ri->cwf_san_alls($_REQUEST['ri_link_notes']);
@@ -346,7 +349,7 @@ EOM;
 				$ri_link_aliases=explode("\n",$ri_link_aliases);
 				$ri_link_aliases=array_unique($ri_link_aliases);
 
-				isset($ri_link_aliases_exist);
+				$ri_link_aliases_exist='';
 				$ri_link_loop_cnt='0';
 				foreach ($ri_link_aliases as $ri_link_aliases_chk) {
 					$ri_link_id_chk='0';
@@ -743,6 +746,7 @@ EOM;
 				$redirect_site_url=site_url();
 			}
 
+			$redirect_url_type_list='';
 			foreach ($redirect_url_types as $redirect_url_type_id => $redirect_url_type_name) {
 				$redirect_url_type_list .='<option value="'.$redirect_url_type_id.'"';
 				if ($redirect_url_type == $redirect_url_type_id) {
@@ -827,6 +831,10 @@ EOM;
 
 $cw_redirect_it_html .=<<<EOM
 <p>The following lists the new changes from version-to-version.</p>
+<p>Version: <b>1.6</b></p>
+<ul style="list-style: disc; margin-left: 25px;">
+<li>Background edits to eliminate some PHP notice messages</li>
+</ul>
 <p>Version: <b>1.5</b></p>
 <ul style="list-style: disc; margin-left: 25px;">
 <li>Fixed: New installs of version 1.4 failed to work correctly</li>

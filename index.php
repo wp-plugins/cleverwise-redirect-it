@@ -2,7 +2,7 @@
 /**
 * Plugin Name: Cleverwise Redirect It
 * Description: Manage link redirects easily through this powerful plugin.  By using this plugin you may easily control external (or even internal) links with ease.  After adding a destination link into the system you will be provided with a link at your domain name.  This provides several advantages.  First if the destination link ever changes no problem.  You simply change it in one location and all links to it are updated.  Second you are building your domain brand since the outbound links use your domain.  Third there is no way for a visitor to tell the link destination without clicking on it, which helps save affiliate commissions.  Fourth it works well for emails as you can shorten outbound links with variables in them.
-* Version: 1.5
+* Version: 1.6
 * Author: Jeremy O'Connell
 * Author URI: http://www.cyberws.com/cleverwise-plugins/
 * License: GPL2 .:. http://opensource.org/licenses/GPL-2.0
@@ -19,7 +19,7 @@ $cwfa_ri=new cwfa_ri;
 ////////////////////////////////////////////////////////////////////////////
 Global $wpdb,$ri_wp_option_version_txt,$ri_wp_option,$ri_wp_option_version_num;
 
-$ri_wp_option_version_num='1.5';
+$ri_wp_option_version_num='1.6';
 $ri_wp_option='redirect_it';
 $ri_wp_option_version_txt=$ri_wp_option.'_version';
 $ri_wp_option_updates_txt=$ri_wp_option.'_updates';

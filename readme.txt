@@ -3,8 +3,8 @@ Contributors: cyberws
 Donate link: http://www.cyberws.com/cleverwise-plugins/
 Tags: redirect, redirects, redirection, url, urls, link, links
 Requires at least: 3.0.1
-Tested up to: 3.9.1
-Stable tag: 1.5
+Tested up to: 4.0
+Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,9 @@ Very doubtful.  It is hard to say for sure the exact length due to various link 
 
 == Changelog ==
 
+= 1.6 =
+Background edits to eliminate some PHP notice messages
+
 = 1.5 =
 Fixed: New installs of version 1.4 failed to work correctly
 
@@ -86,5 +89,5 @@ Initial release of plugin
 
 == Upgrade Notice ==
 
-= 1.5 =
-Fixed: New installs of version 1.4 failed to work correctly
+= 1.6 =
+Background code edits to reduce notice messages in server logs.

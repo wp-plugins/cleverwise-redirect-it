@@ -831,6 +831,10 @@ EOM;
 
 $cw_redirect_it_html .=<<<EOM
 <p>The following lists the new changes from version-to-version.</p>
+<p>Version: <b>1.7</b></p>
+<ul style="list-style: disc; margin-left: 25px;">
+<li>Fixed: Removal of equal signs from redirect urls</li>
+</ul>
 <p>Version: <b>1.6</b></p>
 <ul style="list-style: disc; margin-left: 25px;">
 <li>Background edits to eliminate some PHP notice messages</li>

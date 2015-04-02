@@ -4,7 +4,7 @@ Donate link: http://www.cyberws.com/cleverwise-plugins/
 Tags: redirect, redirects, redirection, url, urls, link, links
 Requires at least: 3.0.1
 Tested up to: 4.1
-Stable tag: 1.6
+Stable tag: 1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,6 +63,9 @@ Very doubtful.  It is hard to say for sure the exact length due to various link 
 
 == Changelog ==
 
+= 1.7 =
+Fixed: Removal of equal signs from redirect urls
+
 = 1.6 =
 Background edits to eliminate some PHP notice messages
 
@@ -89,5 +92,5 @@ Initial release of plugin
 
 == Upgrade Notice ==
 
-= 1.6 =
-Background code edits to reduce notice messages in server logs.
+= 1.7 =
+Equal signs are now kept in redirect urls
